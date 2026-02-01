@@ -204,4 +204,45 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	::selection {
+		@apply bg-secondary text-secondary-foreground;
+	}
+}
+
+@layer utilities {
+	.logo-loading-ring {
+		@apply relative;
+	}
+	.logo-loading-ring::after {
+		content: "";
+		position: absolute;
+		inset: -3px;
+		border-radius: 50%;
+		padding: 2px; /* Increased slightly for rainbow visibility */
+
+		/* Rainbow Conic Gradient */
+		background: conic-gradient(
+			from 0deg,
+			#ff0000 /* Red */,
+			#ff8000 /* Orange */,
+			#ffff00 /* Yellow */,
+			#00ff00 /* Green */,
+			#00ffff /* Cyan */,
+			#0000ff /* Blue */,
+			#8000ff /* Purple */,
+			#ff00ff /* Magenta */,
+			#ff0000 /* Back to Red for smooth loop */
+		);
+
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		animation: spin 1.5s linear infinite; /* Slowed down slightly to see colors */
+	}
 }
