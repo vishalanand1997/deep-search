@@ -210,6 +210,12 @@
 	}
 }
 
+@property --angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
 @layer utilities {
 	.logo-loading-ring {
 		@apply relative;
@@ -217,24 +223,21 @@
 	.logo-loading-ring::after {
 		content: "";
 		position: absolute;
-		inset: -3px;
-		border-radius: 50%;
-		padding: 2px; /* Increased slightly for rainbow visibility */
-
-		/* Rainbow Conic Gradient */
+		inset: -2px;
+		border-radius: inherit;
+		padding: 2px;
 		background: conic-gradient(
-			from 0deg,
-			#ff0000 /* Red */,
-			#ff8000 /* Orange */,
-			#ffff00 /* Yellow */,
-			#00ff00 /* Green */,
-			#00ffff /* Cyan */,
-			#0000ff /* Blue */,
-			#8000ff /* Purple */,
-			#ff00ff /* Magenta */,
-			#ff0000 /* Back to Red for smooth loop */
+			from var(--angle),
+			#ff0000,
+			#ff8000,
+			#ffff00,
+			#00ff00,
+			#00ffff,
+			#0000ff,
+			#8000ff,
+			#ff00ff,
+			#ff0000
 		);
-
 		-webkit-mask:
 			linear-gradient(#fff 0 0) content-box,
 			linear-gradient(#fff 0 0);
@@ -243,6 +246,13 @@
 			linear-gradient(#fff 0 0);
 		-webkit-mask-composite: xor;
 		mask-composite: exclude;
-		animation: spin 1.5s linear infinite; /* Slowed down slightly to see colors */
+		animation: border-rotate 2s linear infinite;
+		pointer-events: none;
+	}
+
+	@keyframes border-rotate {
+		to {
+			--angle: 360deg;
+		}
 	}
 }
