@@ -21,22 +21,20 @@ export async function POST(req: NextRequest) {
 
 		const genAI = new GoogleGenerativeAI(apiKey);
 
-		// Map UI model IDs to actual Gemini model IDs if necessary
-		// Using standard model names that are widely supported
+		// Map UI model IDs to actual Gemini model IDs for 2026/2027
 		let geminiModelId = model;
+
+		// Map aliases to specific 2026/2027 production IDs
 		if (model === "gemini-flash-lite-latest") {
-			geminiModelId = "gemini-1.5-flash"; // More stable ID than -latest
-		} else if (model.startsWith("gemini-3")) {
-			// If Gemini 3 is requested but failing, it might need the version or be in preview
-			// Mapping to common stable IDs as fallbacks
-			geminiModelId =
-				model === "gemini-3-pro-preview"
-					? "gemini-1.5-pro"
-					: "gemini-1.5-flash";
-		} else if (model.includes("2.5")) {
-			geminiModelId = model.includes("pro")
-				? "gemini-1.5-pro"
-				: "gemini-1.5-flash";
+			geminiModelId = "gemini-flash-lite-latest";
+		} else if (model === "gemini-3-flash-preview") {
+			geminiModelId = "gemini-3-flash-preview";
+		} else if (model === "gemini-3-pro-preview") {
+			geminiModelId = "gemini-3-pro-preview";
+		} else if (model === "gemini-2.5-flash-lite") {
+			geminiModelId = "gemini-2.5-flash-lite";
+		} else if (model === "gemini-2.5-pro") {
+			geminiModelId = "gemini-pro-latest"; // Using the stable pro latest alias
 		}
 
 		// Extract system message and chat history
